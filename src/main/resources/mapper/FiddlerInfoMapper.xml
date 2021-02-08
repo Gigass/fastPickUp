@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gigass.mapper.FiddlerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.gigass.pojo.FiddlerInfo" >
+    <id column="series" property="series" jdbcType="INTEGER" />
+    <result column="isRead" property="isread" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIME" />
+    <result column="up_time" property="upTime" jdbcType="TIME" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gigass.pojo.FiddlerInfo" extends="BaseResultMap" >
+    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    series, isRead, creat_time, up_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gigass.pojo.FiddlerInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fiddler_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gigass.pojo.FiddlerInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fiddler_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fiddler_info
+    where series = #{series,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fiddler_info
+    where series = #{series,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gigass.pojo.FiddlerInfoExample" >
+    delete from fiddler_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gigass.pojo.FiddlerInfo" >
+    insert into fiddler_info (series, isRead, creat_time, 
+      up_time, detail)
+    values (#{series,jdbcType=INTEGER}, #{isread,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIME}, 
+      #{upTime,jdbcType=TIME}, #{detail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gigass.pojo.FiddlerInfo" >
+    insert into fiddler_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="series != null" >
+        series,
+      </if>
+      <if test="isread != null" >
+        isRead,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="upTime != null" >
+        up_time,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="series != null" >
+        #{series,jdbcType=INTEGER},
+      </if>
+      <if test="isread != null" >
+        #{isread,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIME},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIME},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gigass.pojo.FiddlerInfoExample" resultType="java.lang.Integer" >
+    select count(*) from fiddler_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fiddler_info
+    <set >
+      <if test="record.series != null" >
+        series = #{record.series,jdbcType=INTEGER},
+      </if>
+      <if test="record.isread != null" >
+        isRead = #{record.isread,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIME},
+      </if>
+      <if test="record.upTime != null" >
+        up_time = #{record.upTime,jdbcType=TIME},
+      </if>
+      <if test="record.detail != null" >
+        detail = #{record.detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update fiddler_info
+    set series = #{record.series,jdbcType=INTEGER},
+      isRead = #{record.isread,jdbcType=VARCHAR},
+      creat_time = #{record.creatTime,jdbcType=TIME},
+      up_time = #{record.upTime,jdbcType=TIME},
+      detail = #{record.detail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fiddler_info
+    set series = #{record.series,jdbcType=INTEGER},
+      isRead = #{record.isread,jdbcType=VARCHAR},
+      creat_time = #{record.creatTime,jdbcType=TIME},
+      up_time = #{record.upTime,jdbcType=TIME}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gigass.pojo.FiddlerInfo" >
+    update fiddler_info
+    <set >
+      <if test="isread != null" >
+        isRead = #{isread,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIME},
+      </if>
+      <if test="upTime != null" >
+        up_time = #{upTime,jdbcType=TIME},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where series = #{series,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gigass.pojo.FiddlerInfo" >
+    update fiddler_info
+    set isRead = #{isread,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIME},
+      up_time = #{upTime,jdbcType=TIME},
+      detail = #{detail,jdbcType=LONGVARCHAR}
+    where series = #{series,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gigass.pojo.FiddlerInfo" >
+    update fiddler_info
+    set isRead = #{isread,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIME},
+      up_time = #{upTime,jdbcType=TIME}
+    where series = #{series,jdbcType=INTEGER}
+  </update>
+</mapper>
