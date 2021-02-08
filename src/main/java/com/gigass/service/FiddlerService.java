@@ -9,6 +9,7 @@ import com.gigass.util.SendmailUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @Service
 public class FiddlerService {
+    @Value("${fast-pickUp-config.to-email-account}")
+    private String toEmail;
 
     @Autowired
     private FiddlerInfoMapper fiddlerInfoMapper;
@@ -27,7 +30,7 @@ public class FiddlerService {
         record.setDetail(params);
         int c=fiddlerInfoMapper.insertSelective(record);
         try {
-            SendmailUtil.sendEmail("xxxxxx@qq.com","闲鱼捡漏(未读1)",params);
+            SendmailUtil.sendEmail(toEmail,"闲鱼捡漏(未读1)",params);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,23 +48,14 @@ public class FiddlerService {
     public PageInfo getAllFiddlerInfo(PageRequest pageRequest) {
         FiddlerInfoExample exp=new FiddlerInfoExample();
         exp.createCriteria().andIsreadEqualTo("1");
-        if(pageRequest!=null){
-            PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
-        }
+        PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
         List<FiddlerInfo> list= fiddlerInfoMapper.selectByExample(exp);
         String json=JSON.toJSONString(list);
         try {
-            for(FiddlerInfo l:list){
-                int c=CRPostInfo(l.getSeries());
-            }
-            SendmailUtil.sendEmail("395650058@qq.com","闲鱼捡漏(未读"+list.size()+")",json);
+            SendmailUtil.sendEmail(toEmail,"闲鱼捡漏(未读"+list.size()+")",json);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(pageRequest!=null) {
             return new PageInfo(list);
-        }else{
-            return null;
-        }
     }
 }
