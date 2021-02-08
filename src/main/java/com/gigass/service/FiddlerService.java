@@ -27,7 +27,7 @@ public class FiddlerService {
         record.setDetail(params);
         int c=fiddlerInfoMapper.insertSelective(record);
         try {
-            SendmailUtil.sendEmail("395650058@qq.com","闲鱼捡漏(未读1)",params);
+            SendmailUtil.sendEmail("xxxxxx@qq.com","闲鱼捡漏(未读1)",params);
         } catch (Exception e) {
             e.printStackTrace();
         }
