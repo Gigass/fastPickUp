@@ -29,9 +29,10 @@ public class FiddlerController {
         return count>0?new ResponseBean(false):new ResponseBean(true);
     }
     @PostMapping("/getAllFiddlerInfo")
-    public ResponseBean getAllFiddlerInfo(@RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+    public ResponseBean getAllFiddlerInfo(@RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,@RequestParam(value = "isRead", defaultValue = "0") String isRead) {
         PageRequest pageRequest = new PageRequest(pageNum, pageSize);
-        PageInfo info =fiddlerService.getAllFiddlerInfo(pageRequest);
+        PageInfo info =fiddlerService.getAllFiddlerInfo(pageRequest,isRead);
+
         return new ResponseBean(true,info);
     }
 

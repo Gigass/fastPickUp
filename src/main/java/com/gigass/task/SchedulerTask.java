@@ -1,6 +1,5 @@
 package com.gigass.task;
 
-import com.gigass.controller.FiddlerController;
 import com.gigass.service.FiddlerService;
 import com.gigass.util.SendmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;

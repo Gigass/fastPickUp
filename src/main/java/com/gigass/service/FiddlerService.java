@@ -45,17 +45,19 @@ public class FiddlerService {
         return fiddlerInfoMapper.updateByPrimaryKeySelective(record);
     }
 
-    public PageInfo getAllFiddlerInfo(PageRequest pageRequest) {
+
+    public PageInfo getAllFiddlerInfo(PageRequest pageRequest,String isRead) {
         FiddlerInfoExample exp=new FiddlerInfoExample();
-        exp.createCriteria().andIsreadEqualTo("1");
+        exp.setOrderByClause("creatTime DESC,uptime DESC");
+        exp.createCriteria().andIsreadEqualTo(isRead);
         PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
         List<FiddlerInfo> list= fiddlerInfoMapper.selectByExample(exp);
         String json=JSON.toJSONString(list);
-        try {
-            SendmailUtil.sendEmail(toEmail,"闲鱼捡漏(未读"+list.size()+")",json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            SendmailUtil.sendEmail(toEmail,"闲鱼捡漏(未读"+list.size()+")",json);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
             return new PageInfo(list);
     }
 }

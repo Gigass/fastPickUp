@@ -6,7 +6,11 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.gigass.constants.DefaultProperties;
 import com.sun.mail.util.MailSSLSocketFactory;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -17,14 +21,14 @@ public class SendmailUtil {
 
     //邮件服务器主机名
     // QQ邮箱的 SMTP 服务器地址为: smtp.qq.com
-    private static String myEmailSMTPHost = "smtp.qq.com";
+    private static String myEmailSMTPHost = DefaultProperties.getMyEmailSMTPHost();
 
     //发件人邮箱
-    private static String myEmailAccount = "XXXXXX@qq.com";
+    private static String myEmailAccount = DefaultProperties.getMyEmailAccount();
 
     //发件人邮箱密码（授权码）
     //在开启SMTP服务时会获取到一个授权码，把授权码填在这里
-    private static String myEmailPassword = "XXXXXXX";
+    private static String myEmailPassword = DefaultProperties.getMyEmailPassword();
 
     /**
      * 邮件单发（自由编辑短信，并发送，适用于私信）
