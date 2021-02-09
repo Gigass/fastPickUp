@@ -24,7 +24,7 @@ pagehelper:
 fast-pickUp-config:
   #发件人
   my-email-SMTP-host: smtp.qq.com
-  my-email-account: 1547654938@qq.com
-  my-email-password: siszzxatnlxyhcha
+  my-email-account: xxx@qq.com
+  my-email-password: xxx
   #收件人
-  to-email-account: 395650058@qq.com
+  to-email-account: xxx@qq.com
