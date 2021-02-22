@@ -48,7 +48,7 @@ public class FiddlerService {
 
     public PageInfo getAllFiddlerInfo(PageRequest pageRequest,String isRead) {
         FiddlerInfoExample exp=new FiddlerInfoExample();
-        exp.setOrderByClause("creatTime DESC,uptime DESC");
+        exp.setOrderByClause("creat_time DESC,up_time DESC");
         exp.createCriteria().andIsreadEqualTo(isRead);
         PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
         List<FiddlerInfo> list= fiddlerInfoMapper.selectByExample(exp);
